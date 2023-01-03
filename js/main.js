@@ -36,7 +36,7 @@ const renderFilms = (array, node) => {
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   if (elInput.value !== "") {
-    fetch(`http://www.omdbapi.com/?apikey=${key}&s=${elInput.value}`)
+    fetch(`https://www.omdbapi.com/?apikey=${key}&s=${elInput.value}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
@@ -51,4 +51,5 @@ elForm.addEventListener("submit", (evt) => {
   }
 });
 
+  
 
