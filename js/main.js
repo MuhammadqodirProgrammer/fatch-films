@@ -7,10 +7,10 @@ const elForm = document.querySelector(".js-form");
 
 const key = "14605c6a";
 
-const renderFilms = (arr, node) => {
+const renderFilms = (array, node) => {
   node.innerHTML = "";
 
-  arr.forEach((film) => {
+  array.forEach((film) => {
     const newItem = document.createElement("li");
     const newImg = document.createElement("img");
     const newTitle = document.createElement("h4");
