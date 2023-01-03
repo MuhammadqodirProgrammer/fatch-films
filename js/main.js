@@ -40,7 +40,7 @@ elForm.addEventListener("submit", (evt) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
-        //   console.log(data.Search);
+          console.log(data.Search);
           renderFilms(data.Search, elList);
           elInput.value = "";
         } else {
