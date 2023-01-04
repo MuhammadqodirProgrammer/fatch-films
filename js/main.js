@@ -1,8 +1,9 @@
-
-
     const elInput =document.querySelector(".js-input")
 const elList = document.querySelector(".js-list")
 const elForm = document.querySelector(".js-form");
+const elBtns = document.querySelector(".js-btns");
+const elBtnPrav = document.querySelector(".btn-prev");
+const elBtnNext = document.querySelector(".btn-next");
 
 
 const key = "14605c6a";
@@ -32,24 +33,59 @@ const renderFilms = (array, node) => {
     node.appendChild(newItem);
   });
 };
+let activePage =1
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   if (elInput.value !== "") {
-    fetch(`https://www.omdbapi.com/?apikey=${key}&s=${elInput.value}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.Search) {
-          console.log(data.Search);
-          renderFilms(data.Search, elList);
-          elInput.value = "";
-        } else {
-          elList.innerHTML = `<h4 class="my-5 text-center text-danger">Film toplmadi ☹🧐</h4>`;
-          elInput.value = "";
-        }
-      });
+ fetchFunc()
   }
 });
+
+elBtns.addEventListener("click",(evt)=>{
+if(evt.target.matches(".btn-prev")){
+  if (activePage > 1) {
+    
+    activePage --
+    console.log(activePage);
+    fetchFunc()
+  }
+}
+if(evt.target.matches(".btn-next")){
+  activePage ++
+  console.log(activePage);
+  fetchFunc()      
+}
+})
+function fetchFunc() {
+  if (activePage == 1) {
+    elBtnPrav.setAttribute("disabled","true")
+  }else{
+    elBtnPrav.removeAttribute("disabled")
+  }
+
+  fetch(`https://www.omdbapi.com/?apikey=${key}&s=${elInput.value}&page=${activePage}`)
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.Search) {
+      console.log(data.Search);
+      renderFilms(data.Search, elList);
+      // elInput.value = "";
+    } else {
+      elList.innerHTML = `<h4 class="my-5 text-center text-danger">Film toplmadi ☹🧐</h4>`;
+      // elInput.value = "";
+    }
+    if(activePage == Math.ceil(data.totalResults / 10)){
+elBtnNext.setAttribute("disabled",true)
+    }else{
+      elBtnNext.removeAttribute("disabled")
+    }
+  });
+}
+
+
+
+
 
   
 
